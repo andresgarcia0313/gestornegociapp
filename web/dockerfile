@@ -1,0 +1,2 @@
+FROM redmine:5.0.0-alpine
+COPY  configuration.yml /usr/src/redmine/config

@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Asde71.4
+      POSTGRES_USER: postgres
+      POSTGRES_ROOT_PASSWORD: Asde71.4
+      POSTGRES_DB: dbgestionapp
+      PGDATA: /var/lib/postgresql/data/pgdata #Agregado para compatibilidad nfs
+    ports:
+      - 5432:5432 # Se agrega para poder realizar copias de seguridad
+    volumes:
+      - dbpostgres:/var/lib/postgresql/data/pgdata
+      #- ./datos/db:/var/lib/postgresql/data/pgdata
+  web:
+    build: web
+    # image: redmine:5.0.0-alpine
+    restart: always
+    #container_name: gestor
+    ports:
+      - 80:3000
+    environment:
+      REDMINE_DB_POSTGRES: db
+      REDMINE_DB_DATABASE: dbgestionapp
+      REDMINE_DB_PASSWORD: Asde71.4
+    volumes:
+      - ./datos/files:/usr/src/redmine/files # se agrega por recomendación de hub docker
+      - ./datos/themes/PurpleMine2:/usr/src/redmine/public/themes/PurpleMine2 # se agrega por tema nuevo
+    depends_on:
+      - db
+volumes:
+  dbpostgres:
+
+#Administrador
+#asde71.4
+#https://www.redmine.org/plugins?utf8=%E2%9C%93&page=1&sort=rating&v=5.0
+#https://hub.docker.com/_/postfixadmin
