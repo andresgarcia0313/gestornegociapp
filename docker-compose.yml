@@ -1,6 +1,8 @@
 version: '3.7'
 services:
   db:
+    #docker compose  -f "docker-compose.yml" up -d --build db
+    #abrir puertos en la nube el web y el de postgres
     image: postgres:14.2-alpine
     restart: always
     environment:
